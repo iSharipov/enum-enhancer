@@ -101,6 +101,10 @@ public class EnumEnhancerAnnotationProcessor extends AbstractProcessor {
 
         associate(pw);
 
+        pw.println();
+
+        enumList(pw);
+
         pw.println("}");
         return new StringBuilder(sw.getBuffer());
     }
@@ -154,6 +158,12 @@ public class EnumEnhancerAnnotationProcessor extends AbstractProcessor {
     private void associate(PrintWriter pw) {
         pw.println("    public static <E> java.util.Map<" + enhanceableElement.getElementName() + ", E> associate(java.util.function.Function<" + enhanceableElement.getElementName() + ", E> transform) {");
         pw.println("        return java.util.stream.Stream.of(" + enhanceableElement.getElementName() + ".values()).collect(java.util.stream.Collectors.toMap(" + uncapitalizeFirst(enhanceableElement.getElementName()) + " -> " + uncapitalizeFirst(enhanceableElement.getElementName()) + ", transform));");
+        pw.println("    }");
+    }
+
+    private void enumList(PrintWriter pw) {
+        pw.println("    public static java.util.List<" + enhanceableElement.getElementName() + "> enumList() {");
+        pw.println("        return new java.util.ArrayList<>(java.util.Arrays.asList(" + enhanceableElement.getElementName() + ".values()));");
         pw.println("    }");
     }
 
