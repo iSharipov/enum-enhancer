@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2020 Sharipov Ilia.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.github.isharipov.enhancer;
 
 
@@ -25,6 +40,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.github.isharipov.enhancer.utils.StringUtils.capitalize;
+import static io.github.isharipov.enhancer.utils.StringUtils.firstLower;
 import static io.github.isharipov.enhancer.utils.StringUtils.uncapitalizeFirst;
 import static javax.lang.model.SourceVersion.RELEASE_8;
 
@@ -81,6 +97,10 @@ public class EnumEnhancerAnnotationProcessor extends AbstractProcessor {
 
         constructorArgumentsLookup(constructorArguments(element), pw);
 
+        pw.println();
+
+        associate(pw);
+
         pw.println("}");
         return new StringBuilder(sw.getBuffer());
     }
@@ -121,14 +141,20 @@ public class EnumEnhancerAnnotationProcessor extends AbstractProcessor {
         constructorArguments.forEach(constructorArgument -> {
             pw.print("    public static " + enhanceableElement.getElementName() + " from" + capitalize(constructorArgument.getName()) + "(" + constructorArgument.getType() + " " + constructorArgument.getName() + ")");
             pw.println(" {");
-            pw.println("        for (" + enhanceableElement.getElementName() + " " + uncapitalizeFirst(enhanceableElement.getElementName()) + " : " + enhanceableElement.getElementName() + ".values()) {");
-            pw.println("            if (" + uncapitalizeFirst(enhanceableElement.getElementName()) + ".get" + capitalize(constructorArgument.getName()) + "().equals(" + constructorArgument.getName() + ")) {");
-            pw.println("                return " + uncapitalizeFirst(enhanceableElement.getElementName()) + ";");
+            pw.println("        for (" + enhanceableElement.getElementName() + " " + firstLower(enhanceableElement.getElementName()) + " : " + enhanceableElement.getElementName() + ".values()) {");
+            pw.println("            if (" + firstLower(enhanceableElement.getElementName()) + ".get" + capitalize(constructorArgument.getName()) + "().equals(" + constructorArgument.getName() + ")) {");
+            pw.println("                return " + firstLower(enhanceableElement.getElementName()) + ";");
             pw.println("            }");
             pw.println("        }");
             pw.println("        throw new IllegalArgumentException(\"No constant found\");");
             pw.println("    }");
         });
+    }
+
+    private void associate(PrintWriter pw) {
+        pw.println("    public static <E> java.util.Map<" + enhanceableElement.getElementName() + ", E> associate(java.util.function.Function<" + enhanceableElement.getElementName() + ", E> transform) {");
+        pw.println("        return java.util.stream.Stream.of(" + enhanceableElement.getElementName() + ".values()).collect(java.util.stream.Collectors.toMap(" + uncapitalizeFirst(enhanceableElement.getElementName()) + " -> " + uncapitalizeFirst(enhanceableElement.getElementName()) + ", transform));");
+        pw.println("    }");
     }
 
     private boolean isEnum(Element element) {
