@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.isharipov.enhancer.utils;
+package io.github.isharipov.enhancer;
 
 public class EnhanceableElement {
 

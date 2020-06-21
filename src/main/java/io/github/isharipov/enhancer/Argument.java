@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.isharipov.enhancer.utils;
+package io.github.isharipov.enhancer;
 
 public class Argument {
     private final String name;
     private final String type;
+    private final boolean isPrimitive;
 
-    public Argument(String name, String type) {
+    public Argument(String name, String type, boolean isPrimitive) {
         this.name = name;
         this.type = type;
+        this.isPrimitive = isPrimitive;
     }
 
     public String getName() {
@@ -32,11 +34,20 @@ public class Argument {
         return type;
     }
 
+    public boolean isPrimitive() {
+        return isPrimitive;
+    }
+
+    public String compareElement(){
+        return isPrimitive ? " == " + name : ".equals(" + name + ")";
+    }
+
     @Override
     public String toString() {
         return "Argument{" +
                 "name='" + name + '\'' +
                 ", type='" + type + '\'' +
+                ", isPrimitive=" + isPrimitive +
                 '}';
     }
 }

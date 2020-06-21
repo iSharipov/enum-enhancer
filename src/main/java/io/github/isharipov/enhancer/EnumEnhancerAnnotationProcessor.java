@@ -16,9 +16,6 @@
 package io.github.isharipov.enhancer;
 
 
-import io.github.isharipov.enhancer.utils.Argument;
-import io.github.isharipov.enhancer.utils.EnhanceableElement;
-
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
@@ -141,7 +138,7 @@ public class EnumEnhancerAnnotationProcessor extends AbstractProcessor {
                 .filter(this::isConstructor)
                 .map(executableElement -> (ExecutableElement) executableElement)
                 .flatMap(variableElement -> variableElement.getParameters().stream())
-                .map(argument -> new Argument(argument.getSimpleName().toString(), argument.asType().toString()))
+                .map(argument -> new Argument(argument.getSimpleName().toString(), argument.asType().toString(), argument.asType().getKind().isPrimitive()))
                 .collect(Collectors.toList());
     }
 
@@ -150,7 +147,7 @@ public class EnumEnhancerAnnotationProcessor extends AbstractProcessor {
             pw.print("    public static " + enhanceableElement.getElementName() + " from" + capitalize(constructorArgument.getName()) + "(" + constructorArgument.getType() + " " + constructorArgument.getName() + ")");
             pw.println(" {");
             pw.println("        for (" + enhanceableElement.getElementName() + " " + firstLower(enhanceableElement.getElementName()) + " : " + enhanceableElement.getElementName() + ".values()) {");
-            pw.println("            if (" + firstLower(enhanceableElement.getElementName()) + ".get" + capitalize(constructorArgument.getName()) + "().equals(" + constructorArgument.getName() + ")) {");
+            pw.println("            if (" + firstLower(enhanceableElement.getElementName()) + ".get" + capitalize(constructorArgument.getName()) + "()" + constructorArgument.compareElement() + ") {");
             pw.println("                return " + firstLower(enhanceableElement.getElementName()) + ";");
             pw.println("            }");
             pw.println("        }");
