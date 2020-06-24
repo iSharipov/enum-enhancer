@@ -1,5 +1,6 @@
 # EnumEnhancer
 
+![Java CI with Maven](https://github.com/iSharipov/enum-enhancer/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 <a href="https://lgtm.com/projects/g/iSharipov/enum-enhancer/alerts/">
     <img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/iSharipov/enum-enhancer.svg?logo=lgtm&logoWidth=18"/>
 </a>
