@@ -10,6 +10,7 @@
 <a href="https://lgtm.com/projects/g/iSharipov/enum-enhancer/context:java">
     <img alt="Language grade: Java" src="https://img.shields.io/lgtm/grade/java/g/iSharipov/enum-enhancer.svg?logo=lgtm&logoWidth=18"/>
 </a>
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.isharipov/enum-enhancer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.isharipov/enum-enhancer)
 
 ## What is EnumEnhancer
 
@@ -74,7 +75,7 @@ The generated class uses plain Java fields and methods, no reflection is involve
 
 ## EnumEnhancer can be applied
 
-- [x] Polymorphic Deserialization using Jackson<br>
+:fire: Polymorphic Deserialization using Jackson<br>
 We can't use enum's name's because of - An annotation argument must be a compile-time constant
 
 Instead of using this
@@ -120,7 +121,7 @@ use the class Quarter_:
     @JsonSubTypes.Type(value = FourthQuarterDto.class, name = Quarter_.Q4)
 })   
 ```
-- [x] Getting enum associated with<br>
+:fire: Getting enum associated with<br>
 Sometimes we need a Map with enum and associated values
 
 ```java
@@ -141,7 +142,7 @@ Map<Quarter, String> associated = Quarter_.associate(quarter -> {
 });    
 ```
 
-- [x] Getting List or Map of enum
+:fire: Getting List or Map of enum
 
 ```java
 List<Quarter> quarters = Quarter_.enumList();
@@ -150,7 +151,7 @@ List<Quarter> quarters = Quarter_.enumList();
 Map<String, Quarter> quarters = Quarter_.enumMap();
 ```
 
-- [x] Getting enum by constructor parameter<br>
+:fire: Getting enum by constructor parameter<br>
 Processor generates **fromParameter** method for each constructor parameter
 ```java
 Quarter quarter = Quarter_.fromQuarter(1);
