@@ -11,7 +11,11 @@
     <img alt="Language grade: Java" src="https://img.shields.io/lgtm/grade/java/g/iSharipov/enum-enhancer.svg?logo=lgtm&logoWidth=18"/>
 </a>
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.isharipov/enum-enhancer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.isharipov/enum-enhancer)
+<br />
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/iSharipov
 ## What is EnumEnhancer
 
 EnumEnhancer is a Java <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/apt/">annotation processor</a> 
